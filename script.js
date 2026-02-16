@@ -39,3 +39,13 @@ monthTitle.textContent= `${currentDay} ${currentMonth} ${currentYear} `;
 
 //---------------------------------------------------------------------------
 
+const calendarGrid = document.getElementById("calendarGrid");
+let days = "";
+for(let i = 1 ; i <=40 ; i++){
+  days += `<div class="day" >  ${i} </div>`;
+  calendarGrid.innerHTML= days;
+}
+
+
+
+
