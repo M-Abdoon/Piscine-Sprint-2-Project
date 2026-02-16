@@ -18,7 +18,8 @@ export function GetDaysOfMonth(year, month) {
 
 		result.push({
 			dayNumber: i,
-			dayName: dayNamesDictionary(weekday)
+			dayName: dayNamesDictionary(weekday),
+			weekDayNumber: weekday
 		})
 	}
 	return result;

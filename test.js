@@ -1,22 +1,29 @@
 import { GetDaysOfMonth, dayNamesDictionary} from "./logic.js";
 
-const daysOfMonth = GetDaysOfMonth(2026, 5);
-let string = "";
-for(let i = 1; i <= 7; i++) {
-	if(i < 8) {
-		string = `Day ${dayNamesDictionary(i-1)} in grid = `;
+const body = document.getElementById("body");
+const daysOfMonth = GetDaysOfMonth(2026, 6);
 
-		if(dayNamesDictionary(i-1) == daysOfMonth[0].dayName) {
-			string += daysOfMonth[0].dayName
-		}
-		console.log(string)
+function displayCalendarDays(daysOfMonth) {
+	let string = "";
+	let displayedDay = "";
+
+	// for disabled squares in the beginning of calendar table
+	for(let x = 1; x<= daysOfMonth[0].weekDayNumber; x++) {
+		string += "[ Disabled ] ";
 	}
 
+	//start showing days
+	for(let i = 1; i <= daysOfMonth.length; i++) {
+		displayedDay = i;
 
+		// in case we have a special day
+		if(displayedDay == 25) {
+			string += `[Special Day] `;
+			continue;
+		}
+
+		string += `[${displayedDay}] `;
+	}
+	return string;
 }
-//console.log(daysOfMonth[0].dayName);
-
-
-
-
-console.log(GetDaysOfMonth(2026,5));
+body.innerHTML = displayCalendarDays(daysOfMonth);
