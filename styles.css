@@ -1,0 +1,43 @@
+body{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container {
+     max-width: 70%;
+     margin: 0 auto;
+    background-color: rgb(186, 221, 209);
+    border: 1px, solid, rgb(59, 74, 69);
+} 
+     
+
+
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.weekdays div { padding: 6px 8px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.day {
+  border: 1px solid #ddd;
+  height: 1rem;
+  width: 1.5rem;
+  border-radius: 8px;
+   padding: 8px;
+   text-align: center;
+}
+
+
+.day.empty { opacity: 0.4; border-style: dashed; }
+.day-number { font-weight: 700; }
