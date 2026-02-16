@@ -1,4 +1,8 @@
+import daysData from "./days.json" with { type: "json" };
+
 export function GetDaysOfMonth(year, month) {
+	const jsonData = daysData;
+
 	const firstDayOfMonth = new Date(year, month - 1, 1);
 	let weekday = firstDayOfMonth.getDay();
 	let result = [];
@@ -19,7 +23,9 @@ export function GetDaysOfMonth(year, month) {
 		result.push({
 			dayNumber: i,
 			dayName: dayNamesDictionary(weekday),
-			weekDayNumber: weekday
+			weekDayNumber: weekday,
+			isSpecial: true,
+			specialDayName: "halloween day"
 		})
 	}
 	return result;
