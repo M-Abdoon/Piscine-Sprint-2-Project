@@ -5,7 +5,6 @@ const currentDate = new Date(); //Tue Feb 17 2026 01:05:10 GMT+0000 (Greenwich M
 const currentYear = currentDate.getFullYear(); // 2026
 const currentMonth = currentDate.getMonth(); // 1  >> for feb
 const currentDay = currentDate.getDay(); // 2 >>for Tue (0 sun, 1 mon , 2 tue, 3 wed , 4 thu , 5 fri , 6 sat)
->>>>>>> branch-rahma-2
 
 const monthNames = [
   "January",
@@ -45,7 +44,11 @@ function displayCalendarDays(daysOfMonth) {
   for (let i = 1; i <= daysOfMonth.length; i++) {
     displayedDay = i;
 
-    string += `<div class="day">${displayedDay}</div> `;
+	if(daysOfMonth[displayedDay - 2].hasOwnProperty("isSpecialDay")) {
+		string += `<div class="day" style="background-color:red">${displayedDay}</div> `;
+	} else
+    	string += `<div class="day">${displayedDay}</div> `;
+
   }
 
   // for disabled squares in the beginning of calendar table
@@ -76,7 +79,6 @@ for (let i = 0; i < 12; i++) {
 
 monthSelect.addEventListener("change", (e) => {
   monthAndYearState.month = Number(e.target.value); // string to number
-  console.log(monthAndYearState.month);
   daysOfMonth = GetDaysOfMonth(
     monthAndYearState.year,
     monthAndYearState.month + 1,
@@ -144,3 +146,5 @@ nextBtn.addEventListener("click", () => {
 });
 
 //want to change the selected month and year in the select too
+
+console.log(GetDaysOfMonth(2026, 5));

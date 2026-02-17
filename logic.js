@@ -1,9 +1,10 @@
 import daysData from "./days.json" with { type: "json" };
 
 export function GetDaysOfMonth(year, month) {
+	month = month - 1;
 	const jsonData = daysData;
 
-	const firstDayOfMonth = new Date(year, month - 1, 1);
+	const firstDayOfMonth = new Date(year, month, 1);
 	let weekday = firstDayOfMonth.getDay();
 	let result = [];
 
@@ -11,10 +12,10 @@ export function GetDaysOfMonth(year, month) {
 		if (i !== 1) weekday += 1;
 		if (weekday === 7) weekday = 0;
 
-		const isDateValid = new Date(year, month - 1, i);
+		const isDateValid = new Date(year, month, i);
 		if (
 			isDateValid.getFullYear() !== year ||
-			isDateValid.getMonth() !== month - 1 ||
+			isDateValid.getMonth() !== month ||
 			isDateValid.getDate() !== i
 		) {
 			break;
@@ -25,25 +26,44 @@ export function GetDaysOfMonth(year, month) {
 			dayName: dayNamesDictionary(weekday)
 		})
 	}
+
+	result = getSpecialDays(result, monthNamesDictionary(month));
 	return result;
 }
 
 export function dayNamesDictionary(DayNumber) {
-	const dayNames = {
-		0: "Sunday",
-		1: "Monday",
-		2: "Tuesday",
-		3: "Wednesday",
-		4: "Thursday",
-		5: "Friday",
-		6: "Saturday"
-	};
+	const dayNames = [
+		"Sunday",
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday"
+	];
 	return dayNames[DayNumber];
 }
 
-function getSpecialDays(daysOfMonthData, month) { // month is optional parameter
-	// month now is - for example - october
-	month = "October";
+export function monthNamesDictionary(monthNumber) {
+	const monthNames = [
+		"January",
+		"February",
+		"March",
+		"April",
+		"May",
+		"June",
+		"July",
+		"August",
+		"September",
+		"October",
+		"November",
+		"December"
+	];
+	return monthNames[monthNumber];
+}
+
+export function getSpecialDays(daysOfMonthData, month) { // month is optional parameter
+
 	const monthsFiltered = daysData.filter(specialDay => specialDay.monthName == month);
 
 	if(monthsFiltered != 0) { // means we have special days in this month
@@ -52,7 +72,7 @@ function getSpecialDays(daysOfMonthData, month) { // month is optional parameter
 		monthsFiltered.forEach(specialDay => { // assume dayName is Tuesday
 			const nameOfDay = specialDay.dayName;
 			const occurrence = specialDay.occurrence;
-
+			console.log(1);
 			// info of day names repeated in that month
 			const countsOfSelectedDayNames = daysOfMonthData.filter(day => day.dayName == nameOfDay);
 
@@ -67,7 +87,15 @@ function getSpecialDays(daysOfMonthData, month) { // month is optional parameter
 			else if (occurrence === "last")
 				specialDayIs = countsOfSelectedDayNames[4];
 
-			console.log(specialDayIs);
+			specialDayIs.isSpecialDay = {
+				name: specialDay.name,
+				descriptionURL: specialDay.descriptionURL
+			};
+			console.log(1)
 		})
 	}
+	return daysOfMonthData;
 }
+
+
+//console.log(GetDaysOfMonth(2020, 10));
