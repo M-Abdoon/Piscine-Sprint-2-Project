@@ -50,6 +50,10 @@ calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
 
 
 //event listener for the select 
+let monthAndYearState = {
+  month: currentMonth,
+  year: currentYear
+};
 
 const monthNames = [
   "January",
@@ -72,31 +76,41 @@ for(let i = 0 ; i < 12 ; i++){
 const option = document.createElement("option");
 option.value = `${i}`;
 option.textContent = monthNames[i];
-// option.textContent += i+1;
+if (i === currentMonth) {
+  option.selected = true; // Set the current month as selected
+}	
 monthSelect.appendChild(option);
 }
 
 
 monthSelect.addEventListener("change",(e)=> {
-const selectedMonth = Number(e.target.value); // string to number 
-  console.log(typeof(selectedMonth));
-  daysOfMonth = GetDaysOfMonth(currentYear, selectedMonth +1);
-  
-monthTitle.textContent= `${monthNames[selectedMonth]} `;
-
+monthAndYearState.month = Number(e.target.value); // string to number 
+  console.log(monthAndYearState.month);
+  daysOfMonth = GetDaysOfMonth(monthAndYearState.year, monthAndYearState.month +1);
+  monthTitle.textContent= `${monthNames[monthAndYearState.month]} `;
   calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
-
-// if this month selected 
-// save the index number of thsi month 
-// then call the function of days of month that return the month object 
-// then render the month with the function display calendar days 
-//then re-render the whole thing on screen 
-
-
-
 
 } );
 
+const yearSelect = document.getElementById("yearSelect");
+
+for(let i = currentYear - 26 ; i <= currentYear +26 ; i++){
+const option = document.createElement("option");
+option.value = `${i}`;
+option.textContent = i;
+if (i === currentYear) {
+  option.selected = true; // Set the current year as selected
+}
+// option.textContent += i+1;
+yearSelect.appendChild(option);
+}
+
+yearSelect.addEventListener("change",(e)=> {
+monthAndYearState.year = Number(e.target.value);
+  console.log(monthAndYearState.year);
+  daysOfMonth = GetDaysOfMonth(monthAndYearState.year, monthAndYearState.month +1);
+  calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
 
 
+});
 
