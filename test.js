@@ -44,8 +44,18 @@ function displayCalendarDays(daysOfMonth) {
   for (let i = 1; i <= daysOfMonth.length; i++) {
     displayedDay = i;
 
-	if(daysOfMonth[displayedDay - 2].hasOwnProperty("isSpecialDay")) {
+	if(daysOfMonth[displayedDay - 1].hasOwnProperty("isSpecialDay")) {
 		string += `<div class="day" style="background-color:red">${displayedDay}</div> `;
+		/* info of day will be like:
+		{
+			dayName: "Saturday",
+			dayNumber: 9,
+			weekDayNumber: 6,
+			isSpecialDay:
+				descriptionURL: "https://codeyourfuture.github.io/The-Piscine/days/binturongs.txt",
+				name: "International Binturong Day",
+		}
+		*/
 	} else
     	string += `<div class="day">${displayedDay}</div> `;
 

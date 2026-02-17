@@ -23,7 +23,8 @@ export function GetDaysOfMonth(year, month) {
 
 		result.push({
 			dayNumber: i,
-			dayName: dayNamesDictionary(weekday)
+			dayName: dayNamesDictionary(weekday),
+			weekDayNumber: weekday
 		})
 	}
 
@@ -74,24 +75,25 @@ export function getSpecialDays(daysOfMonthData, month) { // month is optional pa
 			const occurrence = specialDay.occurrence;
 			console.log(1);
 			// info of day names repeated in that month
-			const countsOfSelectedDayNames = daysOfMonthData.filter(day => day.dayName == nameOfDay);
+			const dayOccurrence = daysOfMonthData.filter(day => day.dayName == nameOfDay);
 
 			if(occurrence === "first")
-				specialDayIs = countsOfSelectedDayNames[0];
+				specialDayIs = dayOccurrence[0];
 			else if (occurrence === "second")
-				specialDayIs = countsOfSelectedDayNames[1];
+				specialDayIs = dayOccurrence[1];
 			else if (occurrence === "third")
-				specialDayIs = countsOfSelectedDayNames[2];
-			else if (occurrence === "forth")
-				specialDayIs = countsOfSelectedDayNames[3];
+				specialDayIs = dayOccurrence[2];
+			else if (occurrence === "fourth")
+				specialDayIs = dayOccurrence[3] ?? dayOccurrence.at(-1);
 			else if (occurrence === "last")
-				specialDayIs = countsOfSelectedDayNames[4];
+				specialDayIs = dayOccurrence[4] ?? dayOccurrence.at(-1);
 
-			specialDayIs.isSpecialDay = {
-				name: specialDay.name,
-				descriptionURL: specialDay.descriptionURL
+			if(specialDayIs != "") {
+				specialDayIs.isSpecialDay = {
+					name: specialDay.name,
+					descriptionURL: specialDay.descriptionURL
+				};
 			};
-			console.log(1)
 		})
 	}
 	return daysOfMonthData;
