@@ -9,26 +9,37 @@
   <body>
     <header>
         <h1>Days Calendar</h1>
-      <div>
-        <button id="prevBtn" type="button" > Previous Month </button>
-        <button id="nextBtn" type="button"> Next Month </button>
-        <br><br>
-        
-        <label for="monthSelect">Month</label>
-        <select id="monthSelect" name="month"></select>
-
-        <label for="yearSelect">Year</label>
-        <select id="yearSelect" name="year"></select>
-        
-      </div>
     </header>
+    <main >
+      <div class="container">
+        
+        <div class="header">
+       
+          <div class="selectors">
+            <div>
+              <label for="monthSelect">Select Month</label>
+            <select id="monthSelect" name="month"></select>
+            </div>
+            
+            <div>
+                <label for="yearSelect">Select Year</label>
+            <select id="yearSelect" name="year"></select>
+            </div>
+            
+          </div>
 
-    <main class="container">
-      <h2 id="monthTitle" class="monthTitle">February, 2026</h2>
+        <div class="nav">
+          <button id="prevBtn" type="button" > << </button>
+          <h2 id="monthTitle" class="monthTitle">February, 2026</h2>
+          <button id="nextBtn" type="button"> >> </button>
+       </div>
+       
+        </div>
+      
       
 
-
-      <div id="weekdays" class="weekdays">
+        <div class="calendar">
+          <div id="weekdays" class="weekdays">
         <div>Sun</div>
         <div>Mon</div>
         <div>Tue</div>
@@ -41,6 +52,10 @@
       <div id="calendarGrid" class="grid">
         <div class="day">1</div>
       </div>
+
+        </div>
+      
+    </div>
     </div>
     </main>
   </body>
