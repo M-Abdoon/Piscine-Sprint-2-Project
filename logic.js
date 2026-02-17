@@ -24,8 +24,8 @@ export function GetDaysOfMonth(year, month) {
 			dayNumber: i,
 			dayName: dayNamesDictionary(weekday),
 			weekDayNumber: weekday,
-			isSpecial: true,
-			specialDayName: "halloween day"
+			// isSpecial: true,
+			// specialDayName: "halloween day"
 		})
 	}
 	return result;
