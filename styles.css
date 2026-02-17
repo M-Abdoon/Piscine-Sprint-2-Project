@@ -1,11 +1,15 @@
+
+
 body{
     display: flex;
     align-items: center;
     flex-direction: column;
+    color: black;
 }
 
 .container {
-     max-width: 70%;
+   
+     /* max-width: 70%; */
      margin: 0 auto;
     background-color: rgb(186, 221, 209);
     border: 1px, solid, rgb(59, 74, 69);
@@ -51,6 +55,7 @@ body{
 
 .empty { 
   border: 1px solid #ddd;
+  color:transparent;
   height: 1rem;
   width: 1.5rem;
   border-radius: 8px;
