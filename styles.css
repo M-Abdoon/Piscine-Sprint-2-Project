@@ -38,6 +38,20 @@ body{
    text-align: center;
 }
 
+.day:hover {
+  background-color: rgb(59, 74, 69);
+  color: white;
+  cursor: pointer;
+}
 
-.day.empty { opacity: 0.4; border-style: dashed; }
+
+.empty { 
+  border: 1px solid #ddd;
+  height: 1rem;
+  width: 1.5rem;
+  border-radius: 8px;
+   padding: 8px;
+   text-align: center;
+  opacity: 0.4;  }
+  
 .day-number { font-weight: 700; }

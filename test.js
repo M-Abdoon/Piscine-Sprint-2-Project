@@ -29,7 +29,7 @@ function displayCalendarDays(daysOfMonth) {
 
 	// for disabled squares in the beginning of calendar table
 	for(let x = 1; x<= daysOfMonth[0].weekDayNumber; x++) {
-		string += `<div class="day empty">x</div>`;
+		string += `<div class=" empty">x</div>`;
 	}
 
 	//start showing days
@@ -41,7 +41,7 @@ function displayCalendarDays(daysOfMonth) {
 
 	// for disabled squares in the beginning of calendar table
 	for(let x = 1; x<= 6 - daysOfMonth[daysOfMonth.length - 1].weekDayNumber; x++) {
-		string += `<div class="day empty">x</div>`;
+		string += `<div class=" empty">x</div>`;
 	}
 	return string;
 }
