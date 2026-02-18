@@ -45,7 +45,7 @@ export function dayNamesDictionary(DayNumber) {
 	return dayNames[DayNumber];
 }
 
-export function monthNamesDictionary(monthNumber) {
+export function monthNamesDictionary(month) {
 	const monthNames = {
 		0: "January",
 		1: "February",
@@ -60,7 +60,9 @@ export function monthNamesDictionary(monthNumber) {
 		10: "November",
 		11: "December"
 	};
-	return monthNames[monthNumber];
+	if(typeof month === "string")
+		return Object.keys(monthNames).find(k => monthNames[k] === month);
+	return monthNames[month];
 }
 
 export function getSpecialDays(daysOfMonthData, month) { // month is optional parameter
@@ -73,7 +75,6 @@ export function getSpecialDays(daysOfMonthData, month) { // month is optional pa
 		monthsFiltered.forEach(specialDay => { // assume dayName is Tuesday
 			const nameOfDay = specialDay.dayName;
 			const occurrence = specialDay.occurrence;
-			console.log(1);
 			// info of day names repeated in that month
 			const dayOccurrence = daysOfMonthData.filter(day => day.dayName == nameOfDay);
 
@@ -91,6 +92,7 @@ export function getSpecialDays(daysOfMonthData, month) { // month is optional pa
 			if(specialDayIs != "") {
 				specialDayIs.isSpecialDay = {
 					name: specialDay.name,
+					occurrence: specialDay.occurrence,
 					descriptionURL: specialDay.descriptionURL
 				};
 			};
@@ -99,5 +101,52 @@ export function getSpecialDays(daysOfMonthData, month) { // month is optional pa
 	return daysOfMonthData;
 }
 
+export function ordinalNumbering(occurrence) {
+	const ordinalNumbers = {
+		1: "first",
+		2: "second",
+		3: "third",
+		4: "fourth",
+		5: "last"
+	}
+	return Object.keys(ordinalNumbers).find(k => ordinalNumbers[k] === occurrence);
+}
 
-//console.log(GetDaysOfMonth(2020, 10));
+export function getDTStamp() {
+	const now = new Date();
+
+	const YYYY = now.getUTCFullYear();
+	const MM = String(now.getUTCMonth() + 1).padStart(2, "0");
+	const DD = String(now.getUTCDate()).padStart(2, "0");
+
+	return `${YYYY}${MM}${DD}`;
+}
+
+export function getIcsiFormatData(startYear, endYear) {
+	let newDaysData = [];
+
+	for(let year = startYear; year <= endYear; year++) {	
+		for(let month = 1; month <= 12; month++) {
+			const daysOfMonth = GetDaysOfMonth(year, month);
+
+			daysOfMonth.forEach(day => {
+				if(day.hasOwnProperty("isSpecialDay")) {
+					const name = day.isSpecialDay.name;
+					const nameToUID = name.replace(/ /g, "-").toLowerCase();
+					const dtStartMonth = month.toString().padStart(2, "0");
+					const dtStartDay = day.dayNumber.toString().padStart(2, "0");
+
+					// preparing data to export in ical format
+					newDaysData.push({
+						UID: `${nameToUID}-${year}@ourDaysCalendar`,
+						dtStamp: getDTStamp(),
+						dtStart: `${year}${dtStartMonth}${dtStartDay}`,
+						summary: name,
+						description: day.isSpecialDay.descriptionURL
+					});
+				}
+			});
+		}
+	}
+	return newDaysData;
+}
