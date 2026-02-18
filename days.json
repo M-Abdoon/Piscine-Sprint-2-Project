@@ -33,12 +33,5 @@
         "dayName": "Friday",
         "occurrence": "last",
         "descriptionURL": "https://codeyourfuture.github.io/The-Piscine/days/lemurs.txt"
-    },
-	{
-        "name": "World Lemur Day",
-        "monthName": "February",
-        "dayName": "Friday",
-        "occurrence": "fourth",
-        "descriptionURL": "https://codeyourfuture.github.io/The-Piscine/days/lemurs.txt"
     }
 ]

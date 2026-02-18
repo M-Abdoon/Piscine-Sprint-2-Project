@@ -41,13 +41,14 @@ function displayCalendarDays(daysOfMonth) {
   }
 
   //start showing days
-  for (let displayedDay = 0; displayedDay <= daysOfMonth.length - 1; displayedDay++) {
+  for (let i = 1; i <= daysOfMonth.length; i++) {
+	displayedDay = i;
 
-	if(daysOfMonth[displayedDay].hasOwnProperty("isSpecialDay")) {
+	if(daysOfMonth[i - 1].hasOwnProperty("isSpecialDay")) {
 
 		// example of how we call special day name and description url >>
-		const specialDayName = daysOfMonth[displayedDay].isSpecialDay.name;
-		const specialDayDesc = daysOfMonth[displayedDay].isSpecialDay.descriptionURL;
+		const specialDayName = daysOfMonth[displayedDay - 1].isSpecialDay.name;
+		const specialDayDesc = daysOfMonth[displayedDay - 1].isSpecialDay.descriptionURL;
 		//<<
 		
 		string += `<div class="day" style="background-color:red" title="${specialDayName}">${displayedDay}</div> `;
