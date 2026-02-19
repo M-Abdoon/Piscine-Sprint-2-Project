@@ -1,31 +1,18 @@
 import {
-	monthNamesDictionary, 
-	ordinalNumbering, 
-	getIcsiFormatData
+	getIcsiFormatData,
+	generateIcsFile
 } from "./logic.js";
-import daysData from "./days.json" with { type: "json" };
+import { writeFile } from "fs/promises";
 
-const allIcsInfo = getIcsiFormatData(2020, 2030);
+const filename = "daysCalendar.ics";
+const startYear = 2020;
+const endYear = 2030;
 
-	let string = 
-`BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//DaysCalendar-Rahma-Abdoon//EN
-`;
-	allIcsInfo.forEach( day => {
-		string += 
-`BEGIN:VEVENT
-UID:${day.UID}
-DTSTAMP:${day.dtStamp}
-DTSTART;VALUE=DATE:${day.dtStart}
-SUMMARY:${day.summary}
-DESCRIPTION:${day.descriptionURL}
-END:VEVENT
-`;
-	});
-string += "END:VCALENDAR";
+console.log("Generating ics file...");
 
-console.log(string);
+const allIcsInfo = await getIcsiFormatData(startYear, endYear);
+const icsFormatData = generateIcsFile(allIcsInfo);
 
+await writeFile(filename, icsFormatData);
 
-//console.log(generateIcs());
+console.log(`${ filename } file is generated successfully!`);

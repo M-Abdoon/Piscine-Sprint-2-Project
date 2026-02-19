@@ -122,19 +122,20 @@ export function getDTStamp() {
 	return `${YYYY}${MM}${DD}`;
 }
 
-export function getIcsiFormatData(startYear, endYear) {
+export async function getIcsiFormatData(startYear, endYear) {
 	let newDaysData = [];
 
 	for(let year = startYear; year <= endYear; year++) {	
 		for(let month = 1; month <= 12; month++) {
 			const daysOfMonth = GetDaysOfMonth(year, month);
 
-			daysOfMonth.forEach(day => {
+			for (const day of daysOfMonth) {
 				if(day.hasOwnProperty("isSpecialDay")) {
 					const name = day.isSpecialDay.name;
 					const nameToUID = name.replace(/ /g, "-").toLowerCase();
 					const dtStartMonth = month.toString().padStart(2, "0");
 					const dtStartDay = day.dayNumber.toString().padStart(2, "0");
+					const description = day.isSpecialDay.descriptionURL;
 
 					// preparing data to export in ical format
 					newDaysData.push({
@@ -142,11 +143,43 @@ export function getIcsiFormatData(startYear, endYear) {
 						dtStamp: getDTStamp(),
 						dtStart: `${year}${dtStartMonth}${dtStartDay}`,
 						summary: name,
-						description: day.isSpecialDay.descriptionURL
+						description: await getDescriptionTxt(description)
 					});
 				}
-			});
+			};
 		}
 	}
 	return newDaysData;
+}
+
+export async function getDescriptionTxt(url) {
+  try {
+    const response = await fetch(url);
+    const text = await response.text();
+    return text;
+  } catch (err) {
+    return "Description not available.";
+  }
+}
+
+export function generateIcsFile(allIcsInfo) {
+	let string = 
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//DaysCalendar-Rahma-Abdoon//EN
+`;
+	allIcsInfo.forEach( day => {
+		string += 
+`BEGIN:VEVENT
+UID:${day.UID}
+DTSTAMP:${day.dtStamp}
+DTSTART;VALUE=DATE:${day.dtStart}
+SUMMARY:${day.summary}
+DESCRIPTION:${day.description}
+END:VEVENT
+`;
+	});
+	string += "END:VCALENDAR";
+
+	return string;
 }
