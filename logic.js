@@ -71,15 +71,12 @@ export function getSpecialDays(daysOfMonthData, month) {
   );
 
   if (monthsFiltered != 0) {
-    // means we have special days in this month
-
     let specialDayIs = {};
+
     monthsFiltered.forEach((specialDay) => {
-      // assume dayName is Tuesday
       const nameOfDay = specialDay.dayName;
       const occurrence = specialDay.occurrence;
 
-      // info of day names repeated in that month
       const dayOccurrence = daysOfMonthData.filter(
         (day) => day.dayName == nameOfDay,
       );
@@ -138,7 +135,6 @@ export async function getIcsiFormatData(startYear, endYear) {
           const dtStartDay = day.dayNumber.toString().padStart(2, "0");
           const description = day.isSpecialDay.descriptionURL;
 
-          // preparing data to export in ical format
           newDaysData.push({
             UID: `${nameToUID}-${year}@ourDaysCalendar`,
             dtStamp: getDTStamp(),
