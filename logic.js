@@ -32,6 +32,8 @@ export function GetDaysOfMonth(year, month) {
 	return result;
 }
 
+console.log(GetDaysOfMonth(2020, 10));
+
 export function dayNamesDictionary(DayNumber) {
 	const dayNames = [
 		"Sunday",
@@ -65,16 +67,17 @@ export function monthNamesDictionary(month) {
 	return monthNames[month];
 }
 
-export function getSpecialDays(daysOfMonthData, month) { // month is optional parameter
+export function getSpecialDays(daysOfMonthData, month) {
 
 	const monthsFiltered = daysData.filter(specialDay => specialDay.monthName == month);
 
 	if(monthsFiltered != 0) { // means we have special days in this month
 		
-		let specialDayIs = "";
+		let specialDayIs = {};
 		monthsFiltered.forEach(specialDay => { // assume dayName is Tuesday
 			const nameOfDay = specialDay.dayName;
 			const occurrence = specialDay.occurrence;
+
 			// info of day names repeated in that month
 			const dayOccurrence = daysOfMonthData.filter(day => day.dayName == nameOfDay);
 
@@ -85,16 +88,14 @@ export function getSpecialDays(daysOfMonthData, month) { // month is optional pa
 			else if (occurrence === "third")
 				specialDayIs = dayOccurrence[2];
 			else if (occurrence === "fourth")
-				specialDayIs = dayOccurrence[3] ?? dayOccurrence.at(-1);
+				specialDayIs = dayOccurrence[3];
 			else if (occurrence === "last")
-				specialDayIs = dayOccurrence[4] ?? dayOccurrence.at(-1);
+				specialDayIs = dayOccurrence.at(-1);
 
-			if(specialDayIs != "") {
-				specialDayIs.isSpecialDay = {
-					name: specialDay.name,
-					occurrence: specialDay.occurrence,
-					descriptionURL: specialDay.descriptionURL
-				};
+			specialDayIs.isSpecialDay = {
+				name: specialDay.name,
+				occurrence: specialDay.occurrence,
+				descriptionURL: specialDay.descriptionURL
 			};
 		})
 	}
