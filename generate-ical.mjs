@@ -1,10 +1,7 @@
-import {
-	getIcsiFormatData,
-	generateIcsFile
-} from "./logic.js";
+import { getIcsiFormatData, generateIcsFile } from "./logic.js";
 import { writeFile } from "fs/promises";
 
-const filename = "daysCalendar.ics";
+const filename = "days.ics";
 const startYear = 2020;
 const endYear = 2030;
 
@@ -15,4 +12,4 @@ const icsFormatData = generateIcsFile(allIcsInfo);
 
 await writeFile(filename, icsFormatData);
 
-console.log(`${ filename } file is generated successfully!`);
+console.log(`${filename} file is generated successfully!`);
