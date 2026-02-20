@@ -12,8 +12,7 @@ h1 {
 }
 .container {
   margin: 0 auto;
-  height: 100vh;
-  width: 100%;
+  max-width: 900px;
 }
 
 .header {
@@ -41,10 +40,7 @@ h1 {
 }
 
 .calendar {
-  background-color: rgb(186, 221, 209);
-  box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.4);
-  color: black;
-  padding: 0.5rem;
+  padding: 1rem;
 }
 .weekdays {
   display: grid;
@@ -60,16 +56,15 @@ h1 {
 .grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+  gap: 7px;
 }
 
 .day {
-  border: 1px solid #ddd;
-  height: 1rem;
-  width: 1.5rem;
+  min-height: 60px;
+  padding: 6px;
   border-radius: 8px;
-  padding: 8px;
-  text-align: center;
+  border: 1px solid #ccc;
+  background: rgb(87, 87, 87);
 }
 
 .day:hover {
@@ -79,14 +74,11 @@ h1 {
 }
 
 .empty {
-  border: 1px solid #ddd;
-  color: transparent;
-  height: 1rem;
-  width: 1.5rem;
+  min-height: 60px;
+  border: 1px solid #ffffff;
   border-radius: 8px;
-  padding: 8px;
-  text-align: center;
-  opacity: 0.4;
+  padding: 6px;
+  opacity: 0.1;
 }
 
 .day-number {
@@ -94,5 +86,12 @@ h1 {
 }
 
 .special {
-  background-color: rgb(247, 235, 164);
+  background-color: rgb(39, 39, 39);
+  font-size: small;
+}
+
+.special:hover {
+  background-color: rgb(101, 107, 86);
+  color: white;
+  cursor: pointer;
 }

@@ -1,4 +1,8 @@
-import { GetDaysOfMonth, dayNamesDictionary } from "./logic.js";
+import {
+  GetDaysOfMonth,
+  dayNamesDictionary,
+  getDescriptionTxt,
+} from "./logic.js";
 
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
@@ -29,12 +33,12 @@ monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearS
 
 let daysOfMonth = GetDaysOfMonth(currentYear, currentMonth + 1);
 
-function displayCalendarDays(daysOfMonth) {
+async function displayCalendarDays(daysOfMonth) {
   let string = "";
   let displayedDay = "";
 
   for (let x = 1; x <= daysOfMonth[0].weekDayNumber; x++) {
-    string += `<div class="empty">x</div>`;
+    string += `<div class="empty"></div>`;
   }
 
   for (let i = 1; i <= daysOfMonth.length; i++) {
@@ -42,10 +46,11 @@ function displayCalendarDays(daysOfMonth) {
 
     if (daysOfMonth[i - 1].hasOwnProperty("isSpecialDay")) {
       const specialDayName = daysOfMonth[displayedDay - 1].isSpecialDay.name;
-      const specialDayDesc =
+      const specialDayDescUrl =
         daysOfMonth[displayedDay - 1].isSpecialDay.descriptionURL;
+      const specialDayDesc = await getDescriptionTxt(specialDayDescUrl);
 
-      string += `<div class="day special" title="${specialDayName}">${displayedDay}</div> `;
+      string += `<div class="day special" title="${specialDayDesc}">${displayedDay}<br>${specialDayName}</div> `;
     } else string += `<div class="day">${displayedDay}</div> `;
   }
 
@@ -54,11 +59,11 @@ function displayCalendarDays(daysOfMonth) {
     x <= 6 - daysOfMonth[daysOfMonth.length - 1].weekDayNumber;
     x++
   ) {
-    string += `<div class="empty">x</div>`;
+    string += `<div class="empty"></div>`;
   }
   return string;
 }
-calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
+calendarGrid.innerHTML = await displayCalendarDays(daysOfMonth);
 
 const monthSelect = document.getElementById("monthSelect");
 
@@ -72,7 +77,7 @@ for (let i = 0; i < 12; i++) {
   monthSelect.appendChild(option);
 }
 
-monthSelect.addEventListener("change", (e) => {
+monthSelect.addEventListener("change", async (e) => {
   monthAndYearState.month = Number(e.target.value);
   daysOfMonth = GetDaysOfMonth(
     monthAndYearState.year,
@@ -80,7 +85,7 @@ monthSelect.addEventListener("change", (e) => {
   );
   monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearState.year}`;
 
-  calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
+  calendarGrid.innerHTML = await displayCalendarDays(daysOfMonth);
 });
 
 const yearSelect = document.getElementById("yearSelect");
@@ -95,7 +100,7 @@ for (let i = currentYear - 26; i <= currentYear + 26; i++) {
   yearSelect.appendChild(option);
 }
 
-yearSelect.addEventListener("change", (e) => {
+yearSelect.addEventListener("change", async (e) => {
   monthAndYearState.year = Number(e.target.value);
   console.log(monthAndYearState.year);
   daysOfMonth = GetDaysOfMonth(
@@ -103,13 +108,13 @@ yearSelect.addEventListener("change", (e) => {
     monthAndYearState.month + 1,
   );
   monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearState.year}`;
-  calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
+  calendarGrid.innerHTML = await displayCalendarDays(daysOfMonth);
 });
 
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 
-prevBtn.addEventListener("click", () => {
+prevBtn.addEventListener("click", async () => {
   monthAndYearState.month--;
   if (monthAndYearState.month < 0) {
     monthAndYearState.month = 11;
@@ -120,12 +125,12 @@ prevBtn.addEventListener("click", () => {
     monthAndYearState.month + 1,
   );
   monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearState.year}`;
-  calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
+  calendarGrid.innerHTML = await displayCalendarDays(daysOfMonth);
   monthSelect.value = monthAndYearState.month;
   yearSelect.value = monthAndYearState.year;
 });
 
-nextBtn.addEventListener("click", () => {
+nextBtn.addEventListener("click", async () => {
   monthAndYearState.month++;
   if (monthAndYearState.month > 11) {
     monthAndYearState.month = 0;
@@ -136,7 +141,7 @@ nextBtn.addEventListener("click", () => {
     monthAndYearState.month + 1,
   );
   monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearState.year}`;
-  calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
+  calendarGrid.innerHTML = await displayCalendarDays(daysOfMonth);
   monthSelect.value = monthAndYearState.month;
   yearSelect.value = monthAndYearState.year;
 });
