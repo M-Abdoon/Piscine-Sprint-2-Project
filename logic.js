@@ -128,25 +128,39 @@ export async function getIcsFormatData(startYear, endYear) {
       const daysOfMonth = GetDaysOfMonth(year, month);
 
       for (const day of daysOfMonth) {
-        if (day.hasOwnProperty("isSpecialDay")) {
-          const name = day.isSpecialDay.name;
-          const nameToUID = name.replace(/ /g, "-").toLowerCase();
-          const dtStartMonth = month.toString().padStart(2, "0");
-          const dtStartDay = day.dayNumber.toString().padStart(2, "0");
-          const description = day.isSpecialDay.descriptionURL;
+        if (!day.hasOwnProperty("isSpecialDay")) continue;
 
-          newDaysData.push({
-            UID: `${nameToUID}-${year}@ourDaysCalendar`,
-            dtStamp: getDTStamp(),
-            dtStart: `${year}${dtStartMonth}${dtStartDay}`,
-            summary: name,
-            description: await getDescriptionTxt(description),
-          });
-        }
+        const name = day.isSpecialDay.name;
+        const nameToUID = name.replace(/ /g, "-").toLowerCase();
+        const descriptionURL = day.isSpecialDay.descriptionURL;
+
+        const dtStartDate = new Date(year, month - 1, day.dayNumber);
+        const dtEndDate = new Date(dtStartDate);
+        dtEndDate.setDate(dtStartDate.getDate() + 1);
+
+        const dtStartStr = formatDateToICS(dtStartDate);
+        const dtEndStr = formatDateToICS(dtEndDate);
+
+        newDaysData.push({
+          UID: `${nameToUID}-${year}@ourDaysCalendar`,
+          dtStamp: getDTStamp(),
+          dtStart: dtStartStr,
+          dtEnd: dtEndStr,
+          summary: name,
+          description: await getDescriptionTxt(descriptionURL),
+        });
       }
     }
   }
+
   return newDaysData;
+}
+
+function formatDateToICS(date) {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  return `${year}${month}${day}`;
 }
 
 export async function getDescriptionTxt(url) {
@@ -169,6 +183,7 @@ PRODID:-//DaysCalendar-Rahma-Abdoon//EN
 UID:${day.UID}
 DTSTAMP:${day.dtStamp}
 DTSTART;VALUE=DATE:${day.dtStart}
+DTEND;VAKUE=DATE:${day.dtEnd}
 SUMMARY:${day.summary}
 DESCRIPTION:${day.description}
 END:VEVENT
