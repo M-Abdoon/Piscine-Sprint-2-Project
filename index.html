@@ -1,62 +1,66 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>Calender</title>
-    <script type="module" src="common.mjs"></script>
-    <script type="module" src="script.js" type="module"></script>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header>
-        <h1>Days Calendar</h1>
-    </header>
-    <main >
-      <div class="container">
-        
-        <div class="header">
-       
-          <div class="selectors">
-            <div>
-              <label for="monthSelect">Select Month</label>
-            <select id="monthSelect" name="month"></select>
-            </div>
-            
-            <div>
-                <label for="yearSelect">Select Year</label>
-            <select id="yearSelect" name="year"></select>
-            </div>
-            
-          </div>
 
-        <div class="nav">
-          <button id="prevBtn" type="button" > << </button>
-          <h2 id="monthTitle" class="monthTitle">February, 2026</h2>
-          <button id="nextBtn" type="button"> >> </button>
-       </div>
-       
-        </div>
-      
-      
+<head>
+	<title>Calender</title>
+	<script type="module" src="common.mjs"></script>
+	<script type="module" src="script.js" type="module"></script>
+	<link rel="stylesheet" href="styles.css" />
+</head>
 
-        <div class="calendar">
-          <div id="weekdays" class="weekdays">
-        <div>Sun</div>
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-      </div>
+<body>
+	<header>
+		<h1>Days Calendar</h1>
+	</header>
+	<main>
+		<div class="container">
 
-      <div id="calendarGrid" class="grid">
-        <div class="day">1</div>
-      </div>
+			<div class="header">
 
-        </div>
-      
-    </div>
-    </div>
-    </main>
-  </body>
+				<div class="selectors">
+					<div>
+						<label for="monthSelect">Select Month</label>
+						<select id="monthSelect" name="month"></select>
+					</div>
+
+					<div>
+						<label for="yearSelect">Select Year</label>
+						<select id="yearSelect" name="year"></select>
+					</div>
+
+				</div>
+
+				<div class="nav">
+					<button id="prevBtn" type="button">
+						<< </button>
+							<h2 id="monthTitle" class="monthTitle">February, 2026</h2>
+							<button id="nextBtn" type="button"> >> </button>
+				</div>
+
+			</div>
+
+
+
+			<div class="calendar">
+				<div id="weekdays" class="weekdays">
+					<div>Sun</div>
+					<div>Mon</div>
+					<div>Tue</div>
+					<div>Wed</div>
+					<div>Thu</div>
+					<div>Fri</div>
+					<div>Sat</div>
+				</div>
+
+				<div id="calendarGrid" class="grid">
+					<div class="day">1</div>
+				</div>
+
+			</div>
+
+		</div>
+		</div>
+	</main>
+</body>
+
 </html>

@@ -1,11 +1,8 @@
 import { GetDaysOfMonth, dayNamesDictionary } from "./logic.js";
 
-const currentDate = new Date(); //Tue Feb 17 2026 01:05:10 GMT+0000 (Greenwich Mean Time)
-
-const currentYear = currentDate.getFullYear(); // 2026
-const currentMonth = currentDate.getMonth(); // 1  >> for feb
-const currentDay = currentDate.getDay(); // 2 >>for Tue (0 sun, 1 mon , 2 tue, 3 wed , 4 thu , 5 fri , 6 sat)
-
+const currentDate = new Date();
+const currentYear = currentDate.getFullYear();
+const currentMonth = currentDate.getMonth();
 const monthNames = [
   "January",
   "February",
@@ -26,48 +23,32 @@ let monthAndYearState = {
 };
 
 const calendarGrid = document.getElementById("calendarGrid");
+let monthTitle = document.getElementById("monthTitle");
 
 monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearState.year}`;
 
-let daysOfMonth = GetDaysOfMonth(currentYear, currentMonth + 1); // this is for first render to display current month
+let daysOfMonth = GetDaysOfMonth(currentYear, currentMonth + 1);
 
 function displayCalendarDays(daysOfMonth) {
   let string = "";
   let displayedDay = "";
 
-  // for disabled squares in the beginning of calendar table
   for (let x = 1; x <= daysOfMonth[0].weekDayNumber; x++) {
     string += `<div class="empty">x</div>`;
   }
 
-  //start showing days
   for (let i = 1; i <= daysOfMonth.length; i++) {
-	displayedDay = i;
+    displayedDay = i;
 
-	if(daysOfMonth[i - 1].hasOwnProperty("isSpecialDay")) {
+    if (daysOfMonth[i - 1].hasOwnProperty("isSpecialDay")) {
+      const specialDayName = daysOfMonth[displayedDay - 1].isSpecialDay.name;
+      const specialDayDesc =
+        daysOfMonth[displayedDay - 1].isSpecialDay.descriptionURL;
 
-		// example of how we call special day name and description url >>
-		const specialDayName = daysOfMonth[displayedDay - 1].isSpecialDay.name;
-		const specialDayDesc = daysOfMonth[displayedDay - 1].isSpecialDay.descriptionURL;
-		//<<
-		
-		string += `<div class="day" style="background-color:red" title="${specialDayName}">${displayedDay}</div> `;
-		/* info of day will be like:
-		{
-			dayName: "Saturday",
-			dayNumber: 9,
-			weekDayNumber: 6,
-			isSpecialDay:
-				descriptionURL: "https://codeyourfuture.github.io/The-Piscine/days/binturongs.txt",
-				name: "International Binturong Day",
-		}
-		*/
-	} else
-    	string += `<div class="day">${displayedDay}</div> `;
-
+      string += `<div class="day special" title="${specialDayName}">${displayedDay}</div> `;
+    } else string += `<div class="day">${displayedDay}</div> `;
   }
 
-  // for disabled squares in the beginning of calendar table
   for (
     let x = 1;
     x <= 6 - daysOfMonth[daysOfMonth.length - 1].weekDayNumber;
@@ -79,27 +60,24 @@ function displayCalendarDays(daysOfMonth) {
 }
 calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
 
-//event listener for the select
-
 const monthSelect = document.getElementById("monthSelect");
-//create the months options
+
 for (let i = 0; i < 12; i++) {
   const option = document.createElement("option");
   option.value = `${i}`;
   option.textContent = monthNames[i];
   if (i === currentMonth) {
-    option.selected = true; // Set the current month as selected
+    option.selected = true;
   }
   monthSelect.appendChild(option);
 }
 
 monthSelect.addEventListener("change", (e) => {
-  monthAndYearState.month = Number(e.target.value); // string to number
+  monthAndYearState.month = Number(e.target.value);
   daysOfMonth = GetDaysOfMonth(
     monthAndYearState.year,
     monthAndYearState.month + 1,
   );
-  //   monthTitle.textContent= `${monthNames[monthAndYearState.month]} `;
   monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearState.year}`;
 
   calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
@@ -112,9 +90,8 @@ for (let i = currentYear - 26; i <= currentYear + 26; i++) {
   option.value = `${i}`;
   option.textContent = i;
   if (i === currentYear) {
-    option.selected = true; // Set the current year as selected
+    option.selected = true;
   }
-  // option.textContent += i+1;
   yearSelect.appendChild(option);
 }
 
@@ -129,7 +106,6 @@ yearSelect.addEventListener("change", (e) => {
   calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
 });
 
-//event listeners for the next/previous buttons
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 
@@ -160,7 +136,3 @@ nextBtn.addEventListener("click", () => {
   monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearState.year}`;
   calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
 });
-
-//want to change the selected month and year in the select too
-
-console.log(GetDaysOfMonth(2026, 5));

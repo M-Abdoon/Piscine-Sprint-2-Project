@@ -8,7 +8,7 @@ export function GetDaysOfMonth(year, month) {
   let weekday = firstDayOfMonth.getDay();
   let result = [];
 
-  for (let i = 1; i <= 35; i++) {
+  for (let i = 1; i <= 31; i++) {
     if (i !== 1) weekday += 1;
     if (weekday === 7) weekday = 0;
 
@@ -70,7 +70,7 @@ export function getSpecialDays(daysOfMonthData, month) {
     (specialDay) => specialDay.monthName == month,
   );
 
-  if (monthsFiltered != 0) {
+  if (monthsFiltered.length != 0) {
     let specialDayIs = {};
 
     monthsFiltered.forEach((specialDay) => {
@@ -120,7 +120,7 @@ export function getDTStamp() {
   return `${YYYY}${MM}${DD}`;
 }
 
-export async function getIcsiFormatData(startYear, endYear) {
+export async function getIcsFormatData(startYear, endYear) {
   let newDaysData = [];
 
   for (let year = startYear; year <= endYear; year++) {

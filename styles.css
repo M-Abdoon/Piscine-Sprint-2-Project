@@ -76,7 +76,7 @@ h1 {
 }
 
 .empty {
-  border: 1px solid #ddd;
+  border: 1px solid #ffffff;
   color: transparent;
   height: 1rem;
   width: 1.5rem;
@@ -88,4 +88,8 @@ h1 {
 
 .day-number {
   font-weight: 700;
+}
+
+.special {
+  background-color: red;
 }
