@@ -86,12 +86,12 @@ h1 {
 }
 
 .special {
-  background-color: rgb(39, 39, 39);
+  background-color: rgb(23, 47, 24);
   font-size: small;
 }
 
 .special:hover {
-  background-color: rgb(101, 107, 86);
-  color: white;
+  background-color: rgb(168, 222, 155);
+  color: black;
   cursor: pointer;
 }

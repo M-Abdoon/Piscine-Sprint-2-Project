@@ -45,7 +45,7 @@ function displayCalendarDays(daysOfMonth) {
       const specialDayDesc =
         daysOfMonth[displayedDay - 1].isSpecialDay.descriptionURL;
 
-      string += `<div class="day special" title="${specialDayName}">${displayedDay}</div> `;
+      string += `<div class="day special" title="${specialDayName}">${displayedDay}<br>${specialDayName}</div> `;
     } else string += `<div class="day">${displayedDay}</div> `;
   }
 
