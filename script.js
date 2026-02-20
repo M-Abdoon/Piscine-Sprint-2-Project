@@ -1,8 +1,4 @@
-import {
-  GetDaysOfMonth,
-  dayNamesDictionary,
-  getDescriptionTxt,
-} from "./logic.js";
+import { GetDaysOfMonth, dayNamesDictionary } from "./logic.js";
 
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
@@ -33,7 +29,7 @@ monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearS
 
 let daysOfMonth = GetDaysOfMonth(currentYear, currentMonth + 1);
 
-async function displayCalendarDays(daysOfMonth) {
+function displayCalendarDays(daysOfMonth) {
   let string = "";
   let displayedDay = "";
 
@@ -46,11 +42,10 @@ async function displayCalendarDays(daysOfMonth) {
 
     if (daysOfMonth[i - 1].hasOwnProperty("isSpecialDay")) {
       const specialDayName = daysOfMonth[displayedDay - 1].isSpecialDay.name;
-      const specialDayDescUrl =
+      const specialDayDesc =
         daysOfMonth[displayedDay - 1].isSpecialDay.descriptionURL;
-      const specialDayDesc = await getDescriptionTxt(specialDayDescUrl);
 
-      string += `<div class="day special" title="${specialDayDesc}">${displayedDay}<br>${specialDayName}</div> `;
+      string += `<div class="day special" title="${specialDayName}">${displayedDay}</div> `;
     } else string += `<div class="day">${displayedDay}</div> `;
   }
 
@@ -63,7 +58,7 @@ async function displayCalendarDays(daysOfMonth) {
   }
   return string;
 }
-calendarGrid.innerHTML = await displayCalendarDays(daysOfMonth);
+calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
 
 const monthSelect = document.getElementById("monthSelect");
 
@@ -77,7 +72,7 @@ for (let i = 0; i < 12; i++) {
   monthSelect.appendChild(option);
 }
 
-monthSelect.addEventListener("change", async (e) => {
+monthSelect.addEventListener("change", (e) => {
   monthAndYearState.month = Number(e.target.value);
   daysOfMonth = GetDaysOfMonth(
     monthAndYearState.year,
@@ -85,7 +80,7 @@ monthSelect.addEventListener("change", async (e) => {
   );
   monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearState.year}`;
 
-  calendarGrid.innerHTML = await displayCalendarDays(daysOfMonth);
+  calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
 });
 
 const yearSelect = document.getElementById("yearSelect");
@@ -100,7 +95,7 @@ for (let i = currentYear - 26; i <= currentYear + 26; i++) {
   yearSelect.appendChild(option);
 }
 
-yearSelect.addEventListener("change", async (e) => {
+yearSelect.addEventListener("change", (e) => {
   monthAndYearState.year = Number(e.target.value);
   console.log(monthAndYearState.year);
   daysOfMonth = GetDaysOfMonth(
@@ -108,13 +103,13 @@ yearSelect.addEventListener("change", async (e) => {
     monthAndYearState.month + 1,
   );
   monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearState.year}`;
-  calendarGrid.innerHTML = await displayCalendarDays(daysOfMonth);
+  calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
 });
 
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 
-prevBtn.addEventListener("click", async () => {
+prevBtn.addEventListener("click", () => {
   monthAndYearState.month--;
   if (monthAndYearState.month < 0) {
     monthAndYearState.month = 11;
@@ -125,12 +120,12 @@ prevBtn.addEventListener("click", async () => {
     monthAndYearState.month + 1,
   );
   monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearState.year}`;
-  calendarGrid.innerHTML = await displayCalendarDays(daysOfMonth);
+  calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
   monthSelect.value = monthAndYearState.month;
   yearSelect.value = monthAndYearState.year;
 });
 
-nextBtn.addEventListener("click", async () => {
+nextBtn.addEventListener("click", () => {
   monthAndYearState.month++;
   if (monthAndYearState.month > 11) {
     monthAndYearState.month = 0;
@@ -141,7 +136,7 @@ nextBtn.addEventListener("click", async () => {
     monthAndYearState.month + 1,
   );
   monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearState.year}`;
-  calendarGrid.innerHTML = await displayCalendarDays(daysOfMonth);
+  calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
   monthSelect.value = monthAndYearState.month;
   yearSelect.value = monthAndYearState.year;
 });
