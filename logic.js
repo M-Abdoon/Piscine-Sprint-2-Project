@@ -97,19 +97,6 @@ export function getSpecialDays(daysOfMonthData, month) {
   return daysOfMonthData;
 }
 
-export function ordinalNumbering(occurrence) {
-  const ordinalNumbers = {
-    1: "first",
-    2: "second",
-    3: "third",
-    4: "fourth",
-    5: "last",
-  };
-  return Object.keys(ordinalNumbers).find(
-    (k) => ordinalNumbers[k] === occurrence,
-  );
-}
-
 export function getDTStamp() {
   const now = new Date();
 
@@ -183,7 +170,7 @@ PRODID:-//DaysCalendar-Rahma-Abdoon//EN
 UID:${day.UID}
 DTSTAMP:${day.dtStamp}
 DTSTART;VALUE=DATE:${day.dtStart}
-DTEND;VAKUE=DATE:${day.dtEnd}
+DTEND;VALUE=DATE:${day.dtEnd}
 SUMMARY:${day.summary}
 DESCRIPTION:${day.description}
 END:VEVENT
