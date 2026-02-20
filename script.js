@@ -121,6 +121,8 @@ prevBtn.addEventListener("click", () => {
   );
   monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearState.year}`;
   calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
+  monthSelect.value = monthAndYearState.month;
+  yearSelect.value = monthAndYearState.year;
 });
 
 nextBtn.addEventListener("click", () => {
@@ -135,4 +137,6 @@ nextBtn.addEventListener("click", () => {
   );
   monthTitle.textContent = `${monthNames[monthAndYearState.month]} ${monthAndYearState.year}`;
   calendarGrid.innerHTML = displayCalendarDays(daysOfMonth);
+  monthSelect.value = monthAndYearState.month;
+  yearSelect.value = monthAndYearState.year;
 });
