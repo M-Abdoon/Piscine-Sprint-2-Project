@@ -18,7 +18,7 @@ test("GetDaysOfMonth() returns the correct data type , expecting array", () => {
 
 //------------------ testing getSpecialDays() ------------------
 
-test("getSpecialDays() returns the correct event names for October 2025", () => {
+test("getSpecialDays() returns the correct events names for October 2025", () => {
   const daysofOctober2025 = [
     { dayNumber: 1, dayName: "Wednesday", weekDayNumber: 3 },
     { dayNumber: 2, dayName: "Thursday", weekDayNumber: 4 },
